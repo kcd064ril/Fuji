@@ -26,7 +26,9 @@ To get started with the DegenToken smart contract, follow these steps:
 ### Functions
 
 - `constructor()`: Initializes the contract with the name "Degen," symbol "DGN," and 18 decimal places. The deployer of the contract becomes the owner.
-
+- 
+- `checkBalance()`: check the balances of users account.
+- 
 - `mint(uint256 _value)`: Allows the owner to mint a specified amount of tokens. The `_value` must be greater than zero.
 
 - `burn(uint256 _value)`: Allows any token holder to burn a specified amount of their tokens. The `_value` must be greater than zero, and the caller must have a sufficient balance.
