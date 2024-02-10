@@ -9,14 +9,11 @@ The DegenToken is an Ethereum-based ERC-20 token with the following characterist
 - **Name**: Degen
 - **Symbol**: DGN
 - **Decimals**: 18
-- **Total Supply**: Initially set to 0
 - **Owner**: The owner of the contract has the ability to mint new tokens, burn tokens, transfer tokens, and redeem prizes.
 
 ## Getting Started
 
 To get started with the DegenToken smart contract, follow these steps:
-
-1. **Prerequisites**: Ensure you have a development environment set up for Ethereum smart contract development. This typically includes tools like [Remix](https://remix.ethereum.org/) for online Solidity development or [Truffle](https://www.trufflesuite.com/) for local development.
 
 2. **Compile**: Compile the smart contract using your chosen development environment to generate the contract ABI and bytecode.
 
@@ -37,17 +34,3 @@ To get started with the DegenToken smart contract, follow these steps:
 - `transfer(address _to, uint256 _value)`: Allows token holders to transfer tokens to another address. The `_value` must be greater than zero, and the caller must have a sufficient balance.
 
 - `redeem(string memory _prize, uint256 _cost)`: Allows token holders to redeem prizes by specifying the prize name `_prize` and its associated cost `_cost`. The cost is deducted from the caller's balance, and the prize selection is recorded. An event `Redeem` is emitted to indicate the successful redemption.
-
-### Modifiers
-
-- `OnlyOwner()`: Ensures that only the owner of the contract can execute a function.
-
-- `IsNonZero(uint value)`: Ensures that the provided value is greater than zero before executing a function.
-
-### Events
-
-- `Transfer(address indexed from, address indexed to, uint256 value)`: Emits an event when tokens are transferred between addresses.
-
-- `Redeem(address indexed user, uint256 prizeCost, string prize)`: Emits an event when a user successfully redeems a prize.
-
-Happy token development! 🚀
