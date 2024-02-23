@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract DegenToken {
     address public owner;
@@ -9,16 +9,31 @@ contract DegenToken {
     string public symbol;
     uint8 public decimals;
     uint256 public totalSupply;
+
+    // Reward COST
+    uint256 public constant SPECIAL_ITEM_COST = 100;
+    uint256 public constant MEDIUM_REWARD_COST = 50;
+    uint256 public constant BASIC_REWARD_COST = 10;
+
+
+// Reward AMOUNT
+uint256 public constant SPECIAL_REWARD_AMOUNT = 50; 
+    uint256 public constant MEDIUM_REWARD_AMOUNT = 20; 
+    uint256 public constant BASIC_REWARD_AMOUNT = 5;  
+
     mapping(address => uint256) public reward;
     mapping(address => uint256) public balanceOf;
 
     bool public rewardReceived;
 
-    constructor() {
+IERC20 public KCT;
+    constructor(address _k6tAddress) {
         owner = msg.sender;
         name = "Degen";
         symbol = "DGN";
         decimals = 18;
+
+        KCT = IERC20(_k6tAddress);
     }
 
     // Modifiers
@@ -55,12 +70,30 @@ contract DegenToken {
         return true;
     }
 
-    function redeem( uint256 _cost) external {
-        require(balanceOf[msg.sender] >= _cost, "low balance");
-        require(_cost > 0, "bad value");
+
+      function redeem(uint256 _cost) external {
+        require(balanceOf[msg.sender] >= _cost, "Insufficient balance");
+        require(_cost > 0, "Invalid cost");
+
         balanceOf[msg.sender] -= _cost;
-        reward[msg.sender] = _cost;
+        reward[msg.sender] += _cost;
+
+        if (_cost >= SPECIAL_ITEM_COST) {
+            KCT.transfer(msg.sender,SPECIAL_REWARD_AMOUNT);
+        } else if (_cost >= MEDIUM_REWARD_COST) {
+            
+            KCT.transfer(msg.sender, MEDIUM_REWARD_AMOUNT);
+        } else if (_cost >= BASIC_REWARD_COST) {
+            
+            KCT.transfer(msg.sender, BASIC_REWARD_AMOUNT);
+        } else {
+         
+            revert("Amount not sufficient for redemption");
+        }
 
         rewardReceived = true;
     }
+
+ 
+
 }
